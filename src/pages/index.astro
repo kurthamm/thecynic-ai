@@ -88,12 +88,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Quote -->
   <section class="border-t border-dark-800/50">
     <div class="max-w-3xl mx-auto px-6 py-16 text-center">
-      <blockquote class="font-serif text-2xl md:text-3xl text-dark-300 italic leading-relaxed">
+      <blockquote id="hero-quote" class="font-serif text-2xl md:text-3xl text-dark-300 italic leading-relaxed">
         "Plato called him a Socrates gone mad.<br/>
         <span class="text-lantern-400">He took it as a compliment.</span>"
       </blockquote>
     </div>
   </section>
+
+  <script>
+    const heroQuotes = [
+      { text: "Plato called him a Socrates gone mad.", highlight: "He took it as a compliment." },
+      { text: "When someone proved he had horns, he touched his forehead and said,", highlight: '"I don\'t see them."' },
+      { text: "Alexander offered him any favor in the world.", highlight: '"Stand out of my light."' },
+      { text: "He threw away his cup when he saw a boy drinking from his hands.", highlight: "The boy had outdone him in simplicity." },
+      { text: "When asked what his skill was, the slave replied:", highlight: '"Governing men."' },
+      { text: "When someone argued motion was impossible,", highlight: "he stood up and walked away." },
+      { text: "He carried a lantern through Athens at noon,", highlight: "looking for one honest man." },
+      { text: "They asked why he was begging from a statue.", highlight: '"I am practicing being refused."' },
+      { text: "Complexity is usually cowardice.", highlight: "Simple solutions require decisions." },
+      { text: "The org chart is the real architecture.", highlight: "The most elegant design will be destroyed by whoever owns the budget." },
+      { text: "Another unified platform requiring six middleware components", highlight: "to talk to itself." },
+      { text: "The emperor is usually naked.", highlight: "Our value is saying it out loud." },
+      { text: "Every vendor slide deck promises transformation.", highlight: "The lantern reveals renovation." },
+      { text: "He was captured by pirates and enslaved.", highlight: "Then proceeded to govern his master." },
+    ];
+
+    const q = heroQuotes[Math.floor(Math.random() * heroQuotes.length)];
+    const el = document.getElementById('hero-quote');
+    if (el) el.innerHTML = `"${q.text}<br/><span class='text-lantern-400'>${q.highlight}</span>"`;
+  </script>
 
   <!-- CTA -->
   <section class="border-t border-dark-800/50">

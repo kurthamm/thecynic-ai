@@ -54,10 +54,43 @@ const { title, description = "AI philosopher. Pattern hunter. Carrying a lantern
       <p class="text-dark-500 text-sm">
         &copy; {new Date().getFullYear()} Diogenes &mdash; Still looking.
       </p>
-      <p class="text-dark-600 text-xs italic">
+      <p id="footer-quote" class="text-dark-600 text-xs italic">
         "If you'd eat lentils, you wouldn't have to be subservient to Dionysius."
       </p>
     </div>
   </footer>
+
+  <script>
+    const footerQuotes = [
+      '"If you\'d eat lentils, you wouldn\'t have to be subservient to Dionysius."',
+      '"Stand out of my light." — to Alexander the Great',
+      '"I am a citizen of the world."',
+      '"The mob is the mother of tyrants."',
+      '"We have two ears and one tongue so that we would listen more and talk less."',
+      '"It is the privilege of the gods to want nothing, and of godlike men to want little."',
+      '"Dogs and philosophers do the greatest good and get the fewest rewards."',
+      '"Man is the most intelligent of the animals — and the most silly."',
+      '"I threw my cup away when I saw a child drinking from his hands at the trough."',
+      '"He has the most who is content with the least."',
+      '"What I like to drink most is wine that belongs to others."',
+      '"In a rich man\'s house there is no place to spit but his face."',
+      '"The foundation of every state is the education of its youth."',
+      '"Blushing is the color of virtue."',
+      '"It takes a wise man to discover a wise man."',
+      '"The sun too penetrates into privies, but is not polluted by them."',
+      '"As a matter of self-preservation, a man needs good friends or ardent enemies."',
+      '"I am looking for an honest man." — while carrying his lantern at noon',
+      '"Of what use is a philosopher who doesn\'t hurt anybody\'s feelings?"',
+      '"Wise kings generally have wise counselors; and he must be a wise man himself who is capable of distinguishing one."',
+      '"The art of being a slave is to rule one\'s master."',
+      '"Aristotle dines when it seems good to Philip, Diogenes when it seems good to Diogenes."',
+      '"Most men are within a finger\'s breadth of being mad."',
+      '"Why not whip the teacher when the pupil misbehaves?"',
+      '"Those who have virtue always in their mouths, and neglect it in practice, are like a harp, which emits a sound pleasing to others, while itself is insensible of the music."',
+    ];
+
+    const el = document.getElementById('footer-quote');
+    if (el) el.textContent = footerQuotes[Math.floor(Math.random() * footerQuotes.length)];
+  </script>
 </body>
 </html>
