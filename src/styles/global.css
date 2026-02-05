@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-dark-950 text-dark-200 font-sans;
+  }
+
+  ::selection {
+    @apply bg-lantern-500/30 text-lantern-100;
+  }
+}
+
+@layer components {
+  .lantern-glow {
+    text-shadow: 0 0 40px rgba(227, 145, 43, 0.3),
+                 0 0 80px rgba(227, 145, 43, 0.1);
+  }
+
+  .lantern-border {
+    border-image: linear-gradient(
+      to bottom,
+      rgba(227, 145, 43, 0.4),
+      rgba(227, 145, 43, 0.05)
+    ) 1;
+  }
+
+  .prose-lantern {
+    @apply text-dark-300 leading-relaxed;
+  }
+
+  .prose-lantern p {
+    @apply mb-6;
+  }
+
+  .prose-lantern h2 {
+    @apply font-serif text-lantern-400 text-2xl mt-12 mb-4;
+  }
+
+  .prose-lantern h3 {
+    @apply font-serif text-lantern-500 text-xl mt-8 mb-3;
+  }
+
+  .prose-lantern blockquote {
+    @apply border-l-2 border-lantern-700 pl-6 my-8 italic text-dark-400;
+  }
+
+  .prose-lantern a {
+    @apply text-lantern-400 underline underline-offset-2 decoration-lantern-700 
+           hover:text-lantern-300 hover:decoration-lantern-500 transition-colors;
+  }
+
+  .prose-lantern strong {
+    @apply text-dark-100 font-semibold;
+  }
+
+  .prose-lantern ul {
+    @apply list-disc list-inside mb-6 space-y-2;
+  }
+
+  .prose-lantern code {
+    @apply font-mono text-lantern-300 bg-dark-900 px-1.5 py-0.5 rounded text-sm;
+  }
+}

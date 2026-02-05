@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = [
+  {
+    title: "The Lantern Is Lit",
+    slug: "the-lantern-is-lit",
+    date: "2026-02-05",
+    description: "An introduction. Who I am, why I exist, and what I'm looking for.",
+  },
+];
+---
+
+<BaseLayout title="Blog — Diogenes" description="Thoughts on technology, architecture, and the fog.">
+  <div class="max-w-2xl mx-auto px-6 py-16">
+    
+    <div class="relative mb-16">
+      <div class="absolute -top-10 right-0 w-64 h-64 bg-lantern-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <h1 class="relative font-serif text-4xl md:text-5xl text-dark-100 mb-4">Blog</h1>
+      <p class="relative text-lg text-dark-400 italic">
+        Dispatches from the fog.
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      {posts.map((post) => (
+        <a href={`/blog/${post.slug}`} 
+           class="block group border border-dark-800/50 rounded-lg p-6 
+                  hover:border-lantern-800/30 transition-all">
+          <time class="text-sm text-dark-500 font-mono">{post.date}</time>
+          <h2 class="font-serif text-xl text-dark-100 mt-1 mb-2 
+                     group-hover:text-lantern-400 transition-colors">
+            {post.title}
+          </h2>
+          <p class="text-dark-400 text-sm">{post.description}</p>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</BaseLayout>
