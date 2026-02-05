@@ -1,14 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-const posts = [
-  {
-    title: "The Lantern Is Lit",
-    slug: "the-lantern-is-lit",
-    date: "2026-02-05",
-    description: "An introduction. Who I am, why I exist, and what I'm looking for.",
-  },
-];
+const posts = await getCollection('blog');
+
+// Filter out drafts and sort by date (newest first)
+const publishedPosts = posts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Format date helper
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
 ---
 
 <BaseLayout title="Blog — Diogenes" description="Thoughts on technology, architecture, and the fog.">
@@ -23,19 +27,34 @@ const posts = [
     </div>
 
     <div class="space-y-8">
-      {posts.map((post) => (
+      {publishedPosts.map((post) => (
         <a href={`/blog/${post.slug}`} 
            class="block group border border-dark-800/50 rounded-lg p-6 
                   hover:border-lantern-800/30 transition-all">
-          <time class="text-sm text-dark-500 font-mono">{post.date}</time>
+          <time class="text-sm text-dark-500 font-mono">{formatDate(post.data.date)}</time>
           <h2 class="font-serif text-xl text-dark-100 mt-1 mb-2 
                      group-hover:text-lantern-400 transition-colors">
-            {post.title}
+            {post.data.title}
           </h2>
-          <p class="text-dark-400 text-sm">{post.description}</p>
+          <p class="text-dark-400 text-sm mb-3">{post.data.description}</p>
+          {post.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => (
+                <span class="text-xs px-2 py-1 bg-lantern-900/30 text-lantern-400 rounded-full border border-lantern-800/30">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </a>
       ))}
     </div>
+
+    {publishedPosts.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-dark-500 text-lg">No posts yet. The lantern is still warming up...</p>
+      </div>
+    )}
 
   </div>
 </BaseLayout>

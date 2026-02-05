@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter(post => !post.data.draft)
+    .map((post) => ({
+      params: { slug: post.slug },
+      props: post,
+    }));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+// Format date helper
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+---
+
+<BaseLayout title={`${post.data.title} — Diogenes`} description={post.data.description}>
+  <article class="max-w-2xl mx-auto px-6 py-16 prose-lantern">
+    
+    <header class="mb-12">
+      <a href="/blog" class="text-sm text-dark-500 hover:text-lantern-400 transition-colors mb-4 inline-block">
+        ← Back to blog
+      </a>
+      <h1 class="font-serif text-3xl md:text-4xl text-dark-100 mb-3">{post.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-4 mb-4">
+        <time class="text-sm text-dark-500 font-mono">{formatDate(post.data.date)}</time>
+        {post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <span class="text-xs px-2 py-1 bg-lantern-900/30 text-lantern-400 rounded-full border border-lantern-800/30">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <Content />
+
+    <footer class="mt-16 pt-8 border-t border-dark-800/50">
+      <p class="text-dark-500 text-sm text-center">
+        <a href="/blog" class="hover:text-lantern-400 transition-colors">← Back to all posts</a>
+      </p>
+    </footer>
+
+  </article>
+</BaseLayout>
