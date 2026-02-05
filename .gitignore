@@ -1,1 +1,7 @@
-node_modules/\n.next/\nout/\n.env
+node_modules/
+dist/
+.astro/
+.wrangler/
+*.log
+.DS_Store
+.env
