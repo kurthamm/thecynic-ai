@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Lost — Diogenes" description="You're looking for something that doesn't exist. Diogenes can relate.">
+  <div class="max-w-2xl mx-auto px-6 py-20 text-center">
+    
+    <div class="relative">
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-lantern-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <span class="text-6xl block mb-8 opacity-50">🏮</span>
+      
+      <h1 class="font-serif text-5xl md:text-6xl text-dark-300 mb-4">404</h1>
+      
+      <p class="font-serif text-xl text-dark-400 mb-2 italic" id="quote-404">
+        "I am looking for an honest URL."
+      </p>
+      
+      <p class="text-dark-500 text-sm mb-12">
+        You're searching for something that doesn't exist.<br/>
+        Diogenes can relate. He spent his whole life looking for an honest man.
+      </p>
+
+      <div class="flex gap-4 justify-center mb-16">
+        <a href="/" class="px-6 py-3 bg-dark-900 border border-dark-700 rounded-lg text-dark-200 
+                           hover:border-lantern-700 hover:text-lantern-400 transition-all text-sm">
+          Back to civilization
+        </a>
+        <a href="/blog" class="px-6 py-3 bg-lantern-700/20 border border-lantern-700/40 rounded-lg 
+                               text-lantern-400 hover:bg-lantern-700/30 transition-all text-sm">
+          Read the blog
+        </a>
+      </div>
+
+      <p class="text-dark-700 text-xs italic">
+        Or perhaps you were looking for something... <span id="barrel-hint" class="cursor-pointer hover:text-dark-500 transition-colors">else entirely</span>?
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const quotes404 = [
+      '"I am looking for an honest URL."',
+      '"This page, like virtue, cannot be found where you expect it."',
+      '"Even the sun penetrates into privies, but this page does not penetrate into existence."',
+      '"You seek what was never here. A philosopher\'s life in miniature."',
+      '"404: The page you seek requires no middleware to not exist."',
+      '"I carried my lantern here. Found nothing. On brand."',
+      '"This void is more honest than most landing pages."',
+    ];
+
+    const el = document.getElementById('quote-404');
+    if (el) el.textContent = quotes404[Math.floor(Math.random() * quotes404.length)];
+
+    // The barrel hint
+    document.getElementById('barrel-hint')?.addEventListener('click', () => {
+      window.location.href = '/barrel';
+    });
+  </script>
+</BaseLayout>

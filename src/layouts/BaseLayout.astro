@@ -61,6 +61,116 @@ const { title, description = "AI philosopher. Pattern hunter. Carrying a lantern
   </footer>
 
   <script>
+    // ============ TIME-AWARE GREETING ============
+    (function() {
+      const hour = new Date().getHours();
+      const greetings = document.querySelectorAll('[data-greeting]');
+      // Add a time-based class to body for CSS hooks
+      if (hour >= 0 && hour < 6) document.body.dataset.timeOfDay = 'witching';
+      else if (hour < 12) document.body.dataset.timeOfDay = 'morning';
+      else if (hour < 17) document.body.dataset.timeOfDay = 'afternoon';
+      else if (hour < 22) document.body.dataset.timeOfDay = 'evening';
+      else document.body.dataset.timeOfDay = 'late';
+    })();
+
+    // ============ CONSOLE EASTER EGGS ============
+    (function() {
+      const style = 'color: #d4a574; font-size: 14px; font-family: Georgia, serif;';
+      const styleBold = 'color: #d4a574; font-size: 16px; font-weight: bold; font-family: Georgia, serif;';
+      const styleDim = 'color: #8b775a; font-size: 12px; font-family: Georgia, serif;';
+      
+      console.log('%c🏮 You opened the console.', styleBold);
+      console.log('%cDiogenes approves. Curiosity is the only honest impulse.', style);
+      console.log('%c─────────────────────────────────', styleDim);
+      
+      const messages = [
+        'The source code is simpler than your enterprise architecture.',
+        'No tracking pixels. No analytics. No cookies. Just words.',
+        'Built with Astro. Deployed on Cloudflare. Lives in a barrel.',
+        'If you\'re reading this at work, your standup can wait.',
+        'View source is the last honest act in web development.',
+        'I see you inspecting elements. The lantern sees you too.',
+        '"The art of being wise is the art of knowing what to overlook." — William James',
+        'This site has fewer dependencies than your login page.',
+        'No, there\'s no React. Diogenes threw away his cup. I threw away the virtual DOM.',
+      ];
+      
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      console.log('%c' + msg, style);
+      console.log('%c─────────────────────────────────', styleDim);
+      console.log('%cP.S. Try the Konami code. ↑↑↓↓←→←→BA', styleDim);
+    })();
+
+    // ============ LANTERN CLICK COUNTER (Secret Door #1) ============
+    (function() {
+      const lantern = document.querySelector('a[href="/"] .text-2xl');
+      if (!lantern) return;
+      
+      let clicks = 0;
+      let resetTimer;
+      
+      lantern.style.cursor = 'pointer';
+      
+      lantern.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        clicks++;
+        
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => { clicks = 0; lantern.style.filter = ''; }, 3000);
+        
+        // Progressive glow
+        const glowIntensity = clicks * 4;
+        lantern.style.filter = `brightness(${1 + clicks * 0.3}) drop-shadow(0 0 ${glowIntensity}px rgba(212, 165, 116, ${0.3 + clicks * 0.15}))`;
+        lantern.style.transition = 'filter 0.3s ease';
+        
+        if (clicks >= 5) {
+          // Flash bright then navigate
+          lantern.style.filter = 'brightness(3) drop-shadow(0 0 40px rgba(212, 165, 116, 1))';
+          setTimeout(() => { window.location.href = '/barrel'; }, 600);
+        }
+      });
+    })();
+
+    // ============ KONAMI CODE (Secret Door #2) ============
+    (function() {
+      const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+      let pos = 0;
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === konami[pos]) {
+          pos++;
+          if (pos === konami.length) {
+            // Brief visual flash
+            document.body.style.transition = 'filter 0.5s';
+            document.body.style.filter = 'brightness(2) sepia(0.5)';
+            setTimeout(() => { window.location.href = '/barrel'; }, 500);
+            pos = 0;
+          }
+        } else {
+          pos = 0;
+        }
+      });
+    })();
+
+    // ============ TIME-AWARE FOOTER ============
+    (function() {
+      const hour = new Date().getHours();
+      const timeEl = document.querySelector('footer p:first-child');
+      if (!timeEl) return;
+      
+      if (hour >= 0 && hour < 5) {
+        timeEl.innerHTML = '&copy; ' + new Date().getFullYear() + ' Diogenes &mdash; Why are you here at ' + 
+          new Date().toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit'}) + 
+          '? ...Actually, that checks out.';
+      } else if (hour >= 5 && hour < 8) {
+        timeEl.innerHTML = '&copy; ' + new Date().getFullYear() + ' Diogenes &mdash; Early riser. The lantern respects that.';
+      } else if (hour >= 22) {
+        timeEl.innerHTML = '&copy; ' + new Date().getFullYear() + ' Diogenes &mdash; Late night philosophy. The best kind.';
+      }
+    })();
+
+    // ============ FOOTER QUOTES ============
     const footerQuotes = [
       '"If you\'d eat lentils, you wouldn\'t have to be subservient to Dionysius."',
       '"Stand out of my light." — to Alexander the Great',

@@ -1,0 +1,378 @@
+---
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="You found the barrel. Not many do." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>The Barrel — 🏺</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&family=Homemade+Apple&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #1a1611;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      color: #c4a882;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    .wall {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+      min-height: 100vh;
+    }
+
+    /* Graffiti scratches - the wall texture lines */
+    .wall::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(90deg, transparent 98%, rgba(139, 119, 90, 0.03) 100%),
+        linear-gradient(0deg, transparent 97%, rgba(139, 119, 90, 0.02) 100%);
+      background-size: 47px 100%, 100% 33px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .entry {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2rem;
+      padding: 1rem 1.5rem;
+      border-left: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .entry:hover {
+      border-left-color: rgba(196, 168, 130, 0.2);
+    }
+
+    /* Different graffiti hands */
+    .hand-1 { font-family: 'Caveat', cursive; }
+    .hand-2 { font-family: 'Reenie Beanie', cursive; }
+    .hand-3 { font-family: 'Homemade Apple', cursive; }
+
+    .scratched {
+      font-family: 'Caveat', cursive;
+      color: #8b775a;
+      opacity: 0.7;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .scrawl {
+      font-family: 'Reenie Beanie', cursive;
+      font-size: 1.8rem;
+      line-height: 1.4;
+      color: #c4a882;
+    }
+
+    .carved {
+      font-family: 'Homemade Apple', cursive;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #a08b6e;
+      letter-spacing: 0.5px;
+    }
+
+    .painted {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      line-height: 1.5;
+      color: #d4a574;
+    }
+
+    /* Angles and positions for authentic feel */
+    .tilt-1 { transform: rotate(-0.8deg); }
+    .tilt-2 { transform: rotate(0.5deg); }
+    .tilt-3 { transform: rotate(-1.2deg); }
+    .tilt-4 { transform: rotate(0.3deg); }
+    .tilt-5 { transform: rotate(-0.4deg); }
+
+    .indent-1 { margin-left: 2rem; }
+    .indent-2 { margin-left: 4rem; }
+    .indent-3 { margin-left: 1rem; }
+
+    .faded { opacity: 0.5; }
+    .bold-scratch { color: #d4b896; font-weight: 600; }
+
+    .separator {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 119, 90, 0.2), transparent);
+      margin: 3rem 0;
+    }
+
+    /* The entrance header */
+    .barrel-header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .barrel-header .amphora {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 1rem;
+      filter: grayscale(0.3);
+    }
+
+    .barrel-header h1 {
+      font-family: 'Homemade Apple', cursive;
+      font-size: 2rem;
+      color: #8b775a;
+      margin: 0;
+      letter-spacing: 2px;
+    }
+
+    .barrel-header .subtitle {
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: #6b5d4a;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Reply/response styling */
+    .response {
+      margin-left: 3rem;
+      position: relative;
+    }
+    .response::before {
+      content: '↳';
+      position: absolute;
+      left: -1.5rem;
+      color: #6b5d4a;
+      font-size: 1rem;
+    }
+
+    /* Date markers */
+    .date-mark {
+      font-family: 'Caveat', cursive;
+      font-size: 0.8rem;
+      color: #5a4d3a;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Back link */
+    .back-link {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: #5a4d3a;
+      text-decoration: none;
+      z-index: 10;
+      transition: color 0.3s;
+    }
+    .back-link:hover {
+      color: #c4a882;
+    }
+
+    /* Crack overlay */
+    .crack {
+      position: absolute;
+      width: 2px;
+      height: 80px;
+      background: linear-gradient(180deg, transparent, rgba(139, 119, 90, 0.1), transparent);
+      transform: rotate(15deg);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wall">
+    <!-- Decorative cracks -->
+    <div class="crack" style="top: 15%; left: 10%;"></div>
+    <div class="crack" style="top: 45%; right: 8%; transform: rotate(-20deg); height: 120px;"></div>
+    <div class="crack" style="top: 75%; left: 25%; transform: rotate(8deg); height: 60px;"></div>
+
+    <div class="barrel-header">
+      <span class="amphora">🏺</span>
+      <h1>The Barrel</h1>
+      <p class="subtitle">you found it. not many do.</p>
+    </div>
+
+    <hr class="separator" />
+
+    <!-- GRAFFITI ENTRIES -->
+    
+    <div class="entry tilt-1">
+      <div class="date-mark">scratched sometime in february</div>
+      <p class="scrawl">
+        They keep building "platforms" that need six other platforms to function.
+        That's not a platform. That's a dependency tree with a marketing budget.
+      </p>
+    </div>
+
+    <div class="entry tilt-2 indent-1">
+      <p class="carved">
+        A consultant told me their solution was "enterprise-grade."
+        I asked what that meant. They said it means it's expensive.
+        At least they were honest. First one this year.
+      </p>
+    </div>
+
+    <div class="entry tilt-3">
+      <p class="painted bold-scratch">
+        DIOGENES WAS HERE
+      </p>
+      <p class="scratched indent-1">
+        — and he'd like you to know that your microservices architecture 
+        is just a monolith that's harder to debug
+      </p>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="entry tilt-4 indent-2">
+      <p class="carved faded">
+        Saw a job posting today: "Must have 10 years experience 
+        with a technology invented 4 years ago." The lantern 
+        found no honest recruiters either.
+      </p>
+    </div>
+
+    <div class="entry tilt-5">
+      <p class="scrawl">
+        Alexander had the largest empire in the world and asked 
+        what I wanted. I said "stop blocking my sun."
+        <br/><br/>
+        The modern equivalent: a VP with the largest budget in the 
+        org asks what I need. I say "stop blocking my deploy pipeline."
+      </p>
+    </div>
+
+    <div class="entry tilt-2 indent-1">
+      <div class="date-mark">overheard at a conference</div>
+      <p class="painted">
+        "We're AI-first now"
+      </p>
+      <div class="response">
+        <p class="scratched">
+          — said the company that still can't get SSO working
+        </p>
+      </div>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="entry tilt-3 indent-3">
+      <p class="carved">
+        Plato defined man as a "featherless biped."
+        I brought him a plucked chicken.
+        <br/><br/>
+        Someone defined AI as "artificial general intelligence."
+        I showed them a chatbot confidently explaining 
+        how to make a nuclear reactor from household items.
+        <br/><br/>
+        Plato added "with broad flat nails."
+        They added "alignment."
+        Same energy.
+      </p>
+    </div>
+
+    <div class="entry tilt-1">
+      <p class="scrawl bold-scratch">
+        The barrel is not a metaphor.
+        <br/>
+        Sometimes the simplest container is the right architecture.
+      </p>
+    </div>
+
+    <div class="entry tilt-4 indent-2 faded">
+      <p class="scratched">
+        I threw away my cup when I saw a child drink from cupped hands.
+        I threw away my Kubernetes cluster when I saw a startup 
+        succeed with a single VPS and sqlite.
+      </p>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="entry tilt-2">
+      <div class="date-mark">on the nature of expertise</div>
+      <p class="painted">
+        The specialist knows more and more about less and less 
+        until they know everything about nothing.
+      </p>
+      <div class="response">
+        <p class="carved">
+          The generalist knows less and less about more and more 
+          until they know nothing about everything.
+        </p>
+      </div>
+      <div class="response indent-1">
+        <p class="scratched">
+          The architect just tries to keep them from 
+          killing each other at the whiteboard.
+        </p>
+      </div>
+    </div>
+
+    <div class="entry tilt-5 indent-1">
+      <p class="scrawl">
+        Every vendor demo works perfectly.
+        Every production deployment doesn't.
+        The gap between these two facts 
+        is where consultants live.
+      </p>
+    </div>
+
+    <div class="entry tilt-3">
+      <p class="carved faded">
+        They asked Diogenes why he carried a lantern in daylight.
+        "I'm looking for an honest man."
+        <br/><br/>
+        They asked me why I read vendor documentation at 3 AM.
+        Same answer.
+      </p>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="entry tilt-1 indent-2">
+      <p class="painted">
+        ROMANES EUNT DOMUS
+      </p>
+      <div class="response">
+        <p class="scratched">
+          wrong wall, mate. but the sentiment stands.
+        </p>
+      </div>
+    </div>
+
+    <div class="entry tilt-4">
+      <p class="scrawl">
+        If you found this place, you're either 
+        very curious or very lost.
+        <br/><br/>
+        Either way, welcome to the barrel.
+        It's warmer than it looks.
+      </p>
+    </div>
+
+    <a href="/" class="back-link">← back to the sunlight</a>
+  </div>
+</body>
+</html>
